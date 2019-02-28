@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper" v-if="!$route.meta.public">
     <div class="topbar">
 
       <!-- LOGO -->
@@ -102,7 +102,7 @@
 
         <ul class="list-inline menu-left mb-0">
           <li class="float-left">
-            <button class="button-menu-mobile open-left waves-light waves-effect" id="sidebarCollapse">
+            <button class="button-menu-mobile open-left waves-light waves-effect" @click="humb" id="sidebarCollapse">
               <i class="mdi mdi-menu"></i>
             </button>
           </li>
@@ -201,8 +201,8 @@
                 <span class="menu-arrow"></span>
               </a>
               <ul class="list-unstyled">
-                <li><a href="form-elements.html">General Elements</a></li>
-                <li><a href="form-advanced.html">Advanced Form</a></li>
+                <li><router-link :to="{name: 'formElements'}">General Elements</router-link></li>
+                <li><router-link :to="{name: 'formAdvanced'}">Advanced Form</router-link></li>
                 <li><a href="form-validation.html">Form Validation</a></li>
                 <li><a href="form-wizard.html">Form Wizard</a></li>
                 <li><a href="form-wysiwig.html">WYSIWYG Editor</a></li>
@@ -334,25 +334,33 @@
       </div>
     </div>
   </div>
+  <div class="wrapper" v-else-if="$route.meta.public">
+    <Login v-if="$route.name === 'login'"></Login>
+    <Reset v-if="$route.name === 'reset'"></Reset>
+    <NotFound v-if="$route.name === '404'"></NotFound>
+    <Error v-if="$route.name === '500'"></Error>
+    <Denny v-if="$route.name === '403'"></Denny>
+  </div>
 </template>
 
 <script>
+import Login from '../src/assets/components/Login-Reset/Login'
+import Reset from '../src/assets/components/Login-Reset/Reset'
+import NotFound from '../src/assets/components/Pages/404'
+import Error from '../src/assets/components/Pages/Error'
+import Denny from '../src/assets/components/Pages/Denny'
+
 export default {
   name: 'app',
+  components: {Login, Reset, NotFound, Error, Denny},
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      isLoading: false,
+      currentRoute: window.location.pathname
     }
   },
   mounted () {
-    $(document).ready(function () {
-      $('#sidebarCollapse').on('click', function () {
-        console.log('click')
-        $('#sidebar').toggleClass('active');
-        $('.content-page').toggleClass('content-page-close');
-
-      });
-    });
   },
   methods: {
     cards () {
@@ -369,9 +377,10 @@ export default {
         $(e.target).toggleClass('sumbenu-arrow')
         $(e.target).parent().siblings().toggleClass('submenu')
       }
-
-
-
+    },
+    humb () {
+       $('#sidebar').toggleClass('active');
+       $('.content-page').toggleClass('content-page-close');
     }
   }
 }

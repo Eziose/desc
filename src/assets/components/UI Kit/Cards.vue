@@ -24,7 +24,7 @@
                 <div class="card m-b-20">
                     <img class="card-img-top img-fluid" src="../../images/gallery/9.jpg" alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title">Card title1</h5>
+                        <h5 class="card-title">Card title</h5>
                         <p class="card-text">Some quick example text to build on the card title and make
                             up the bulk of the card's content.</p>
                         <a href="#" class="btn btn-primary">Button</a>

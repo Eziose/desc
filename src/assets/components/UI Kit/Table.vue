@@ -223,7 +223,7 @@
             },
             prevPage() {
                 this.pageNumber--;
-                console.log('bla1');
+                console.log('bla');
             }
         }
     }
